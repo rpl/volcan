@@ -15,6 +15,14 @@ function recoverActorDescriptions(error) {
   return require("./specification/protocol.json");
 }
 
+function workaroundEmptyActorDescriptions(data) {
+  if (Object.keys(data.types).length === 0) {
+    return recoverActorDescriptions(new Error("received empty types from protocolDescription"));
+  }
+
+  return data;
+}
+
 // Type to represent superviser actor relations to actors they supervise
 // in terms of lifetime management.
 var Supervisor = Class({
@@ -90,6 +98,7 @@ var Client = Class({
       this.root
           .protocolDescription()
           .catch(recoverActorDescriptions)
+          .then(workaroundEmptyActorDescriptions)
           .then(this.typeSystem.registerTypes.bind(this.typeSystem))
           .then(this.onReady.bind(this, this.root), this.onFail);
     } else {
