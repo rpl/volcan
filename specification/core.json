@@ -75,12 +75,32 @@
          {
           "name": "attach",
           "request": {},
-          "response": { "_retval": "json" }
+          "oneway": true
+         },
+         {
+          "name": "detach",
+          "request": {},
+          "oneway": true
          }
       ],
       "events": {
+        "exited": {
+           "typeName": "exited"
+        },
+        "detached": {
+           "typeName": "detached"
+        },
+        "tabAttached": {
+           "typeName": "tabAttached"
+        },
+        "tabDetached": {
+           "typeName": "tabDetached"
+        },
         "tabNavigated": {
            "typeName": "tabNavigated"
+        },
+        "frameUpdate": {
+           "typeName": "frameUpdate"
         }
       }
     },
